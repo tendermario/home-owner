@@ -14,7 +14,7 @@ const geistMono = localFont({
 
 export const metadata = {
   title: "Home Owner",
-  description: "An affordable way to enter home ownership",
+  description: "An affordable and ethical way to enter home ownership and share equity",
 };
 
 export default function RootLayout({ children }) {
