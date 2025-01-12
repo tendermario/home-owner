@@ -1,0 +1,36 @@
+services:
+  proxy:
+    image: nginx
+    volumes:
+      - ./templates:/etc/nginx/templates
+    ports:
+      - "8080:80"
+    networks:
+      - front-tier
+      - back-tier
+
+  frontend:
+    image: node:lts
+    volumes:
+      - type: bind
+        source: .
+        target: /home-owner
+    working_dir: /home-owner
+    networks:
+      - back-tier
+    command: [npm, run, dev, --, -H, 0.0.0.0]
+
+  api:
+    build: ../home-owner-api
+    volumes:
+      - type: bind
+        source: ../home-owner-api
+        target: /home-owner-api
+    working_dir: /home-owner-api
+    networks:
+      - back-tier
+    command: [uv, run, python, manage.py, runserver, '0.0.0.0:8000']
+
+networks:
+  front-tier: {}
+  back-tier: {}
