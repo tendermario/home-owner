@@ -3,7 +3,6 @@ server {
     server_name  localhost;
 
     location /api/ {
-        rewrite ^/api/(.*) /$1 break;
         proxy_pass  http://api:8000;
     }
 
